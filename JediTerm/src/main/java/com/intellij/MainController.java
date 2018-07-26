@@ -179,28 +179,27 @@ public class MainController implements Initializable {
 
         @Override
         public ColorPalette getTerminalColorPalette() {
-//            return super.getTerminalColorPalette();
-
             return new ColorPalette() {
                 @Override
                 public Color[] getIndexColors() {
                     return new Color[]{
-                            new Color(0x657b83), //Yellow
-                            new Color(0xdc322f), //Green
-                            new Color(0x586e75), //Green
-                            new Color(0x839496), //Blue
-                            new Color(0xeee8d5), //Cyan
-                            new Color(0x268bd2), //Magenta
-                            new Color(0xfdf6e3), //White
-                            new Color(0x93a1a1), //Magenta
-                            new Color(0xb58900), //Black
-                            new Color(0xcb4b16), //Red
-                            new Color(0x073642), //Red
-                            new Color(0xd33682), //Yellow
-                            new Color(0x6c71c4), //Blue
-                            new Color(0x2aa198), //Cyan
-                            new Color(0x859900), //White
-                            new Color(0x002b36), //Black
+                            new Color(0xfdf6e3),
+                            new Color(0xdc322f),
+                            new Color(0x859900),
+                            new Color(0xb58900),
+                            new Color(0x268bd2),
+                            new Color(0xd33682),
+                            new Color(0x2aa198),
+                            new Color(0xeee8d5),
+
+                            new Color(0x073642),
+                            new Color(0xcb4b16),
+                            new Color(0x586e75),
+                            new Color(0x657b83),
+                            new Color(0x839496),
+                            new Color(0x6c71c4),
+                            new Color(0x93a1a1),
+                            new Color(0x002b36),
                     };
                 }
             };
