@@ -1,0 +1,21 @@
+/*#toolbarViewer {*/
+    /*display: none;*/
+    /*height: 0px;*/
+/*}*/
+
+/*#toolbarContainer {*/
+    /*display: none;*/
+    /*height: 0px;*/
+/*}*/
+
+.toolbar {
+    display: none;
+}
+
+#viewerContainer {
+    top: 0;
+}
+
+/*#viewer {*/
+    /*top: 0px;*/
+/*}*/
