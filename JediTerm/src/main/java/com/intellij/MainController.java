@@ -8,6 +8,7 @@ import com.jediterm.terminal.ui.JediTermWidget;
 import com.jediterm.terminal.ui.UIUtil;
 import com.jediterm.terminal.ui.settings.DefaultSettingsProvider;
 import com.pty4j.PtyProcess;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
@@ -99,8 +100,7 @@ public class MainController implements Initializable {
             AnchorPane.setLeftAnchor(swingNode, 0d);
             AnchorPane.setRightAnchor(swingNode, 0d);
 
-            jediTermWidget.requestFocus();
-            jediTermWidget.requestFocusInWindow();
+            Platform.runLater(swingNode::requestFocus);
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 loggingPtyProcessTtyConnector.close();
