@@ -47,6 +47,9 @@ public class MainController implements Initializable {
 
     private SimpleObjectProperty<File> mainFile;
     private SimpleObjectProperty<File> previewFile;
+    private PtyMain.LoggingPtyProcessTtyConnector loggingPtyProcessTtyConnector;
+    private JediTermWidget jediTermWidget;
+    private PtyProcess process;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,7 +73,7 @@ public class MainController implements Initializable {
         previewFile.addListener((observable, oldValue, newValue) -> fileChanged(observable, oldValue, newValue, previewWebView));
 
         final DefaultSettingsProvider settingsProvider = new MySettingsProvider();
-        final JediTermWidget jediTermWidget = new JediTermWidget(settingsProvider);
+        jediTermWidget = new JediTermWidget(settingsProvider);
 
         try {
             Charset charset = Charset.forName("UTF-8");
@@ -90,8 +93,8 @@ public class MainController implements Initializable {
                 envs.put("TERM", "xterm");
             }
 
-            PtyProcess process = PtyProcess.exec(command, envs, System.getenv("HOME"));
-            final PtyMain.LoggingPtyProcessTtyConnector loggingPtyProcessTtyConnector = new PtyMain.LoggingPtyProcessTtyConnector(process, charset);
+            process = PtyProcess.exec(command, envs, System.getenv("HOME"));
+            loggingPtyProcessTtyConnector = new PtyMain.LoggingPtyProcessTtyConnector(process, charset);
             jediTermWidget.setTtyConnector(loggingPtyProcessTtyConnector);
 
             jediTermWidget.start();
@@ -105,12 +108,6 @@ public class MainController implements Initializable {
             AnchorPane.setRightAnchor(swingNode, 0d);
 
             Platform.runLater(swingNode::requestFocus);
-
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                loggingPtyProcessTtyConnector.close();
-                jediTermWidget.stop();
-                jediTermWidget.close();
-            }));
 
         } catch (IOException e) {
             e.printStackTrace();

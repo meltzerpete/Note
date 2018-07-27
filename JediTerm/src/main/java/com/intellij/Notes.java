@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 public class Notes extends Application {
 
     private static final Logger log = LoggerFactory.getLogger(Notes.class);
+    private MainController controller;
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -24,12 +25,16 @@ public class Notes extends Application {
         log.debug("Loading FXML for main view from: {}", fxmlFile);
         FXMLLoader loader = new FXMLLoader();
         Parent rootNode = loader.load(getClass().getClassLoader().getResourceAsStream(fxmlFile));
-        final MainController controller = loader.getController();
+        controller = loader.getController();
         controller.setMainStage(stage);
 
         log.debug("Showing JFX scene");
         Scene scene = new Scene(rootNode, 735, 463);
         scene.getStylesheets().add("/styles/styles.css");
+
+        stage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
 
         stage.setTitle("Notes");
         stage.setScene(scene);
