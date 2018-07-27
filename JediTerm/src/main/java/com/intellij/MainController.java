@@ -20,7 +20,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.omg.CORBA.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,7 +81,12 @@ public class MainController implements Initializable {
             if (UIUtil.isWindows) {
                 command = new String[]{"cmd.exe"};
             } else {
-                command = new String[]{"/bin/zsh", "--login"};
+                String shellPath = System.getenv("SHELL");
+                if (shellPath == null) {
+                    log.error("Cannot get $SHELL environment variable. Trying '/bin/bash'.");
+                    shellPath = "/bin/bash";
+                }
+                command = new String[]{shellPath, "--login"};
                 envs.put("TERM", "xterm");
             }
 
