@@ -20,6 +20,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.omg.CORBA.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,12 +86,11 @@ public class MainController implements Initializable {
                 envs.put("TERM", "xterm");
             }
 
-            PtyProcess process = PtyProcess.exec(command, envs, null);
+            PtyProcess process = PtyProcess.exec(command, envs, System.getenv("HOME"));
             final PtyMain.LoggingPtyProcessTtyConnector loggingPtyProcessTtyConnector = new PtyMain.LoggingPtyProcessTtyConnector(process, charset);
             jediTermWidget.setTtyConnector(loggingPtyProcessTtyConnector);
 
             jediTermWidget.start();
-            jediTermWidget.setMinimumSize(new Dimension((int) termAnchorPane.getWidth(), (int) termAnchorPane.getHeight()));
 
             SwingNode swingNode = new SwingNode();
             swingNode.setContent(jediTermWidget);
